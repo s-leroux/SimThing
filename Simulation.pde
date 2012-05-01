@@ -12,7 +12,7 @@ class Simulation {
       actor.nextStep();
     }
     for(Actor actor : actors) {
-      actor.nextStatus();
+      actor.nextModel();
     }
   }
   

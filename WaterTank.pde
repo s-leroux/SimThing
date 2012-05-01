@@ -1,8 +1,16 @@
-class WaterTank extends GUIActor {
+class WaterTank extends GUIActor implements ValueInRange {
   WaterTank(float cx, float cy, float capacity, float volume) {
-    super(new WaterTankStatus(min(capacity,volume)), RectByCenter(cx, cy, 78, 78));
+    super(new ValueInRangeModel(volume, 0, capacity), RectByCenter(cx, cy, 78, 78));
     _capacity = capacity;
   }
+  
+  ValueInRangeModel adjust(float delta) {
+    ValueInRangeModel newModel = ((ValueInRangeModel)_futureModel).adjust(delta);
+    _futureModel = newModel;
+    
+    return newModel;
+  }
+
   
   void display() { 
     Rect myShape = (Rect)_shape;
@@ -10,7 +18,7 @@ class WaterTank extends GUIActor {
     float y = myShape.y();
     float h = myShape.height();
     float w = myShape.width();
-    WaterTankStatus current = (WaterTankStatus)_currentStatus;
+    ValueInRangeModel current = (ValueInRangeModel)_currentModel;
     
     pushStyle();
     
@@ -21,7 +29,7 @@ class WaterTank extends GUIActor {
     rect(x, y, x+w, x+h);
 
     fill(100,100,255);
-    rect(x, y+h, x+w, x+h-map(current.volume, 0, _capacity, 0, h));
+    rect(x, y+h, x+w, x+h-map(current.value, 0, _capacity, 0, h));
 
     noFill();
     stroke(0);
@@ -29,32 +37,7 @@ class WaterTank extends GUIActor {
 
     popStyle();
   }
-  
-  float adjustVolumeUpTo(float vol) {
-    WaterTankStatus future = (WaterTankStatus)_futureStatus;
-    if (vol > 0)
-      vol = min(_capacity - future.volume, vol);
-    if (vol < 0)
-      vol = min(future.volume, vol);
-    
-    future.volume += vol;
-    
-    return vol;
-  }
 
   float _capacity;
-}
-
-class WaterTankStatus extends Status {
-  WaterTankStatus(float theVolume) {
-    volume = theVolume;
-  }
-  
-  public Status clone() {
-    return new WaterTankStatus(volume);
-  }
-
-  
-  float volume;
 }
 

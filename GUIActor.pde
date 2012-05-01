@@ -3,8 +3,8 @@
  May respond to user actions (clics) 
 */
 class GUIActor extends Actor {
-  GUIActor(Status status, Shape shape) {
-    super(status);
+  GUIActor(Model model, Shape shape) {
+    super(model);
     _shape = shape;
   }
   

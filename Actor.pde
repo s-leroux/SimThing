@@ -6,9 +6,9 @@
    Its /future/ status - All changes of the status should take place in this one
  */
 class Actor {
-  Actor(Status status) {
-    _currentStatus = status;
-    _futureStatus = (Status)status.clone();
+  Actor(Model model) {
+    _currentModel = model;
+    _futureModel = (Model)model.clone();
   }
 
   void nextStep() {
@@ -16,14 +16,15 @@ class Actor {
   }
 
   /**  */
-  Status nextStatus() {
-    Status pastStatus = _currentStatus;
-    _currentStatus = _futureStatus;
-    _futureStatus = (Status)_futureStatus.clone();
+  Model nextModel() {
+    Model pastModel = _currentModel;
+    _currentModel = _futureModel;
+    _futureModel = (Model)_futureModel.clone();
     
-    return pastStatus;
+    return pastModel;
   }
   
-  Status _currentStatus;
-  Status _futureStatus;
+  Model _currentModel;
+  Model _futureModel;
 }
+

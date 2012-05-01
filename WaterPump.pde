@@ -1,16 +1,16 @@
 class WaterPump extends Actor {
-  WaterPump(WaterTank tank, float flowRate) {
-    super(new Status());
+  WaterPump(ValueInRange tank, float flowRate) {
+    super(new Model());
     _tank = tank;
     _flowRate = flowRate;
   }
   
   void nextStep() {
-    float v = _tank.adjustVolumeUpTo(_flowRate);
-    if (v != _flowRate)
+    ValueInRangeModel m = _tank.adjust(_flowRate);
+    if (m.empty() || m.full())
       _flowRate = -_flowRate;
   }
 
   float _flowRate;
-  WaterTank _tank;
+  ValueInRange _tank;
 }
