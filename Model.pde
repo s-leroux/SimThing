@@ -26,6 +26,11 @@ class ValueInRangeModel extends Model {
   final float max;
 }
 
-interface ValueInRange {
-  ValueInRangeModel adjust(float delta);
+
+interface Value {
+  float adjust(float delta);
+}
+
+interface ValueInRange extends Value {
+  float adjust(float delta);
 }
