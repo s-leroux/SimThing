@@ -41,5 +41,5 @@ class GUIActor extends Actor {
 
   
   protected Shape   _shape;
-  private boolean _pressed; // does the use have clicked on this GUIActor (button not released)
+  protected boolean _pressed; // does the use have clicked on this GUIActor (button not released)
 }

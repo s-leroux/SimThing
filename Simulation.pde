@@ -41,10 +41,30 @@ class Simulation {
   
   void display() {
     for(Actor actor : _actors) {
-      if (actor instanceof GUIActor) // this is ugly ?
+      if (actor instanceof GUIActor) { // this is ugly ?
+        pushStyle();
         ((GUIActor)actor).display();
+        popStyle();
+      }
     }
   }
+  
+  void mousePressed(int x,int y) {
+    for(Actor actor : _actors) {
+      if (actor instanceof GUIActor) { // this is ugly ?
+        ((GUIActor)actor).mousePressed(x,y);
+      }
+    }
+  }
+  
+  void mouseReleased(int x,int y) {
+    for(Actor actor : _actors) {
+      if (actor instanceof GUIActor) { // this is ugly ?
+        ((GUIActor)actor).mouseReleased(x,y);
+      }
+    }
+  }
+
   
   ReadableValue date() { return _date; }
  
@@ -62,7 +82,7 @@ class Simulation {
     final Event event;
   }
   
-  NumericValue                      _date; // Using a float here is only precise up to 16777216
+  NumericValue                      _date; // XXX Using a float here is only precise up to 16777216
   private ArrayList<Actor>          _actors;
   private PriorityQueue<DatedEvent> _events;
 }

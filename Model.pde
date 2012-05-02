@@ -61,8 +61,15 @@ class ValueInRange extends NumericValue {
     return constrain(value+delta, min, max) - value;
   }
   
+  void toMax() { value = max; }
+  void toMin() { value = min; }
+  
   boolean full() { return value == max; }
   boolean empty() { return value == min; }
+  
+  float map(float dmin, float dmax) {
+    return SimThing.map(value, min, max, dmin, dmax);
+  }
   
   final float min;
   final float max;
