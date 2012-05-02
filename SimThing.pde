@@ -11,9 +11,10 @@ void setup() {
   simulation.add(tank2);
   simulation.add(ocean);
   simulation.add(pump);
-//  simulation.add(new WaterPump(tank1.model, tank2.model, 1));
+  simulation.add(new WaterPump(tank1.model, tank2.model, 1));
+  simulation.add(new Display(150,20,tank1.model));
 
-  simulation.in(0, new RepeatEvent(new InvertEvent(pump.model), 100));
+  simulation.in(0, new RepeatEvent(new InvertEvent(pump.model), 200));
 }
 
 void draw() {

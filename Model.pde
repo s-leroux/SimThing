@@ -29,7 +29,7 @@ class NumericValue implements Value {
   
   float value() { return value; }
   
-  private float value;
+  protected float value;
 }
 
 class InfiniteValue implements Value {
@@ -38,9 +38,9 @@ class InfiniteValue implements Value {
   float accept(float delta) { return delta; }
 }
 
-class ValueInRange implements Value {
+class ValueInRange extends NumericValue {
   ValueInRange(float theValue, float theMin, float theMax) {
-    value = constrain(theValue, theMin, theMax);
+    super(constrain(theValue, theMin, theMax));
     min = theMin;
     max = theMax;
   } 
@@ -60,7 +60,6 @@ class ValueInRange implements Value {
   boolean full() { return value == max; }
   boolean empty() { return value == min; }
   
-  float       value;
   final float min;
   final float max;
 }

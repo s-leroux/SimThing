@@ -6,6 +6,14 @@ interface Shape {
     Is the given point in the shape?
     */
   abstract boolean contains(float x, float y);
+  
+  /**
+    Draw the shape using the current fill/stroke - mode is not garanteed
+    */
+  abstract void draw();
+  
+  abstract float cx();
+  abstract float cy();
 }
 
 class Rect implements Shape {  
@@ -38,6 +46,11 @@ class Rect implements Shape {
       _y += _height;
       _height = -_height;
     }
+  }
+  
+  void draw() {
+    rectMode(CORNER);
+    rect(_x,_y,_width,_height);
   }
 }
 
