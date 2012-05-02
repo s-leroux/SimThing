@@ -1,22 +1,15 @@
 class WaterPump extends Actor {
   WaterPump(Value source, Value dest, float flowRate) {
-    super(new Model());
     _source = source;
     _dest = dest;
-    _flowRate = flowRate;
+    model = new NumericValue(flowRate);
   }
   
-  void nextStep() {
-    float s = -_source.adjust(-_flowRate);
-    float d = _dest.adjust(s);
-    if (d != s)
-      _source.adjust(s-d);
-      
-    if (d != _flowRate)
-      _flowRate = -_flowRate;
+  void nextStep(Simulation theSimulation) {
+    theSimulation.in(1, new MoveEvent(_source, _dest, model.value()));
   }
 
-  float _flowRate;
+  NumericValue model;
   Value _source;
   Value _dest;
 }
