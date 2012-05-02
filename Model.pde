@@ -18,7 +18,11 @@ interface Value {
   
 }
 
-class NumericValue implements Value {
+interface ReadableValue {
+  float value();
+}
+
+class NumericValue implements Value, ReadableValue {
   NumericValue(float theValue) {
     value = theValue;
   }

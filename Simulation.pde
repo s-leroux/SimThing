@@ -1,6 +1,6 @@
 class Simulation {
   Simulation() {
-    _date = 0;
+    _date = new NumericValue(0);
     _actors = new ArrayList<Actor>();
     _events = new PriorityQueue<DatedEvent>();
   }
@@ -16,7 +16,7 @@ class Simulation {
     (XXX Should raise an exception?)
     */
   boolean at(long date, Event event) {
-    if (date < _date)
+    if (date < _date.value())
       return false;
       
     _events.add(new DatedEvent(date, event));
@@ -24,18 +24,19 @@ class Simulation {
   }
   
   void in(long delay, Event event) {
-    _events.add(new DatedEvent(_date+delay, event));
+    _events.add(new DatedEvent(_date.value()+delay, event));
   }
   
   void nextStep() {
-    while((_events.size() > 0) && (_events.peek().date <= _date)) {
+    float date = _date.value();
+    while((_events.size() > 0) && (_events.peek().date <= date)) {
       DatedEvent de = _events.poll();
       de.event.doIt(this);
     }
     for(Actor actor : _actors) {
       actor.nextStep(this);
     }
-    _date += 1; // quantum
+    _date.adjust(1); // quantum
   }
   
   void display() {
@@ -45,10 +46,10 @@ class Simulation {
     }
   }
   
-  long date() { return _date; }
+  ReadableValue date() { return _date; }
  
   class DatedEvent implements Comparable<DatedEvent> {
-    DatedEvent(long theDate, Event theEvent) {
+    DatedEvent(float theDate, Event theEvent) {
       date = theDate;
       event = theEvent;
     }
@@ -57,11 +58,11 @@ class Simulation {
       return (date < o.date) ? -1 : (date > o.date) ? 1 : 0; 
     }
     
-    final long date;
+    final float date;
     final Event event;
   }
   
-  private long                      _date;
+  NumericValue                      _date; // Using a float here is only precise up to 16777216
   private ArrayList<Actor>          _actors;
   private PriorityQueue<DatedEvent> _events;
 }
