@@ -1,5 +1,5 @@
 class Gauge extends GUIActor {
-  Gauge(float cx, float cy, float width, float height, IObservable state) {
+  Gauge(float cx, float cy, float width, float height, IConstrained state) {
     super(RectByCenter(cx, cy, width, height));
     _state = state;
   }
@@ -26,6 +26,6 @@ class Gauge extends GUIActor {
   float _y;
   float _width;
   float _height;  
-  final IObservable  _state;
+  final IConstrained  _state;
 }
 

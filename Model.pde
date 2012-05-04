@@ -136,11 +136,17 @@ class ValueInRange extends NumericValue implements Constrained {
 
 interface IObservable {
   float value();
+  
+  String name();
+}
+
+/**
+  Interface for constrained values.
+  */
+interface IConstrained {
   boolean full();
   boolean empty();
   float map(float dmin, float dmax);
-  
-  String name();
 }
 
 /**
@@ -164,7 +170,7 @@ interface IAdjustable {
   void fix();
 }
 
-interface ISimValue extends IObservable, IAdjustable {
+interface ISimValue extends IObservable, IAdjustable, IConstrained {
 }
 
 /**

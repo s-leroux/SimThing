@@ -27,9 +27,8 @@ void setup() {
   simulation.add(new OnOff(40,120,fao));
 
   simulation.add(new Display(150,40,va));
-  /*
   simulation.add(new Display(150,20,simulation.date()));
-  
+  /*
   
   // ------------------------------
   // Logic gate

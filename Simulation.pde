@@ -99,7 +99,7 @@ class Simulation {
     }
   }
 
-  Observable date() { return new SimpleObservable() {
+  IObservable date() { return new IObservable() {
                                     public float value() { return _date; }
                                     public String name() { return "date"; }
                                   };
