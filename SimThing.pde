@@ -1,10 +1,10 @@
 Simulation simulation = new Simulation();
 
 void setup() {
-  size(300,400);
+  size(300,500);
   
-  ValueInRange  tank1  = new ValueInRange("volume cuve A", 50, "l", 0, 200);
-  ValueInRange  tank2  = new ValueInRange("volume cuve B", 150, "l", 0, 200);
+  ValueInRange  tank1  = new ValueInRange("V_A", 50, "l", 0, 200);
+  ValueInRange  tank2  = new ValueInRange("V_B", 150, "l", 0, 200);
   InfiniteValue ocean  = new InfiniteValue();
 
   simulation.add(new Gauge(100,100, 78, 78,tank1));
@@ -36,6 +36,7 @@ void setup() {
 
   rectMode(CORNERS);
   rect(100,180,160,340);
+  
   simulation.add(new OnOff(100, 200, in1));
   simulation.add(new OnOff(100, 260, in2));
   simulation.add(new Indicator(160, 200) {
@@ -46,6 +47,33 @@ void setup() {
   simulation.add(new Indicator(100, 320) {
    public boolean active() { return in3.value()*in4.value() != 0; } 
   });
+  
+  
+  // ------------------------------
+  // Periodic
+  final boolean  b[] = new boolean[5];
+
+  simulation.add(new Switch(60, 420) {
+    public boolean active() { return b[0]; }
+    public void    userAction() { b[0] = !b[0]; }
+  });
+
+  
+  for(int i = 1; i < b.length; ++i) {
+    final int v = i;
+    
+    b[i] = false;
+    simulation.add(new Indicator(80+40*i, 420) {
+     public boolean active() { return b[v]; } 
+    });
+
+    simulation.in(0, new RepeatEvent(200, new Event() {
+      public void doIt(Simulation theSimulation) {
+        b[v] = b[v-1];
+      }
+    }));
+
+  }
 }
 
 void draw() {

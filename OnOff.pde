@@ -1,13 +1,19 @@
-class OnOff extends Indicator {
-  OnOff(float cx, float cy, ValueInRange vir) {
+abstract class Switch extends Indicator {
+  Switch(float cx, float cy) {
     super(cx,cy);
-    _vir = vir;
   }
   
   void display() {
     stroke((_pressed) ? 255 : 0);
 
     super.display();
+  }
+}
+
+class OnOff extends Switch {
+  OnOff(float cx, float cy, ValueInRange vir) {
+    super(cx,cy);
+    _vir = vir;
   }
   
   void userAction() {

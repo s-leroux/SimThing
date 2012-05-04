@@ -1,6 +1,6 @@
 class Simulation {
   Simulation() {
-    _date = new NumericValue("time", 0, "s");
+    _date = 0;
     _actors = new ArrayList<Actor>();
     _events = new PriorityQueue<DatedEvent>();
   }
@@ -16,7 +16,7 @@ class Simulation {
     (XXX Should raise an exception?)
     */
   boolean at(long date, Event event) {
-    if (date < _date.value())
+    if (date < _date)
       return false;
       
     _events.add(new DatedEvent(date, event));
@@ -24,19 +24,18 @@ class Simulation {
   }
   
   void in(long delay, Event event) {
-    _events.add(new DatedEvent(_date.value()+delay, event));
+    _events.add(new DatedEvent(_date+delay, event));
   }
   
   void nextStep() {
-    float date = _date.value();
-    while((_events.size() > 0) && (_events.peek().date <= date)) {
+    while((_events.size() > 0) && (_events.peek().date <= _date)) {
       DatedEvent de = _events.poll();
       de.event.doIt(this);
     }
     for(Actor actor : _actors) {
       actor.nextStep(this);
     }
-    _date.adjust(1); // quantum
+    _date += 1; // quantum
   }
   
   void display() {
@@ -65,11 +64,14 @@ class Simulation {
     }
   }
 
-  
-  Observable date() { return _date; }
+  Observable date() { return new SimpleObservable() {
+                                    public float value() { return _date; }
+                                    public String name() { return "date"; }
+                                  };
+  }
  
   class DatedEvent implements Comparable<DatedEvent> {
-    DatedEvent(float theDate, Event theEvent) {
+    DatedEvent(long theDate, Event theEvent) {
       date = theDate;
       event = theEvent;
     }
@@ -78,11 +80,11 @@ class Simulation {
       return (date < o.date) ? -1 : (date > o.date) ? 1 : 0; 
     }
     
-    final float date;
+    final long  date;
     final Event event;
   }
   
-  NumericValue                      _date; // XXX Using a float here is only precise up to 16777216
+  long                              _date;
   private ArrayList<Actor>          _actors;
   private PriorityQueue<DatedEvent> _events;
 }

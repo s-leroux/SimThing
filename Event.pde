@@ -51,7 +51,7 @@ class InvertEvent extends Event {
 }
 
 class RepeatEvent extends Event {
-  RepeatEvent(Event event, long delay) {
+  RepeatEvent(long delay, Event event) {
     _event = event;
     _delay = delay;
   }

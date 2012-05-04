@@ -35,6 +35,44 @@ interface Adjustable {
   float accept(float delta);
 }
 
+abstract class SimpleObservable implements Observable {
+  String name() { return ""; }
+  String unit() { return ""; }
+}
+
+abstract class SimpleAdjustable extends SimpleObservable implements Adjustable {
+  void invert() {
+    float v = value();
+    if (v>0) {
+      adjust(-2*v);
+    }
+    else {
+      adjust(2*v);
+    }
+  }
+  
+  float accept(float delta) { return delta; }
+}
+
+/**
+  An Observal and Adjustable instance with sensible defaults.
+  
+  Require only to override adjust and value.
+ */
+abstract class SimpleValue extends SimpleObservable implements Adjustable {
+  void invert() {
+    float v = value();
+    if (v>0) {
+      adjust(-2*v);
+    }
+    else {
+      adjust(2*v);
+    }
+  }
+  
+  float accept(float delta) { return delta; }
+}
+
 class InfiniteValue implements Adjustable {
   void invert() { /* nothing to do */ }
   void adjust(float delta) { /* nothing to do */ }
@@ -100,4 +138,5 @@ class ValueInRange extends NumericValue implements Constrained {
   final float _min;
   final float _max;
 }
+
 
