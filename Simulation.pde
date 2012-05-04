@@ -3,7 +3,7 @@ class Simulation {
     _date = 0;
     _actors = new ArrayList<Actor>();
     _events = new PriorityQueue<DatedEvent>();
-    _state = new HashMap<String,ISimValue>();
+    _state = new HashMap<String,IAdjustable>();
   }
   
   void add(Actor actor) {
@@ -31,7 +31,7 @@ class Simulation {
   /**
     Register a new state value
     */
-  private void addState(String name, ISimValue value) {
+  private void addState(String name, IAdjustable value) {
     if (_state.containsKey(name))
       throw new IllegalArgumentException();
       
@@ -39,30 +39,26 @@ class Simulation {
   }
   
   ISimValue  makeValueInRange(String name, float value, float min, float max) {
-    ISimValue v = new SimValue(value, min, max);
+    ISimValue v = new SimValue(name, value, min, max);
     addState(name, v);
     
     return v;
   }
   
   ISimValue  makeValue(String name, float value) {
-    ISimValue v = new SimValue(value);
+    ISimValue v = new SimValue(name, value);
     addState(name, v);
     
     return v;
   }
   
   IAdjustable  makeInfiniteValue(String name) {
-    ISimValue v = new InfiniteValue();
+    IAdjustable v = new InfiniteValue();
     addState(name, v);
     
     return v;
   }
-  
-  IObservable getObservableState(String name) {
-    return _state.get(name);
-  }
-  
+ 
   void nextStep() {
     while((_events.size() > 0) && (_events.peek().date <= _date)) {
       DatedEvent de = _events.poll();
@@ -71,7 +67,7 @@ class Simulation {
     for(Actor actor : _actors) {
       actor.nextStep(this);
     }
-    for(ISimValue v : _state.values()) {
+    for(IAdjustable v : _state.values()) {
       v.fix();
     }
     _date += 1; // quantum
@@ -128,6 +124,6 @@ class Simulation {
   private PriorityQueue<DatedEvent> _events;
   
   // The current state of the simulation
-  private Map<String, ISimValue>     _state;
+  private Map<String, IAdjustable>     _state;
 }
 

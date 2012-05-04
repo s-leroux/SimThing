@@ -1,5 +1,5 @@
 class Display extends GUIActor {
-  Display(float cx, float cy, Observable model) {
+  Display(float cx, float cy, IObservable model) {
     super(RectByCenter(cx,cy,200, 20));
     _model = model;
   }
@@ -12,7 +12,6 @@ class Display extends GUIActor {
     fill(0);
     textAlign(LEFT,BASELINE);
     text(_model.name(), _shape.left()+5, _shape.cy()+5);
-    text("XXXX", _shape.cx()+5, _shape.cy()+5);
     
     rectMode(CORNERS);
     fill(200);
@@ -22,9 +21,11 @@ class Display extends GUIActor {
     textAlign(RIGHT,BASELINE);
     fill(0);
     text(_model.value(), _shape.cx()+70, _shape.cy()+5);
+    /*
     textAlign(LEFT,BASELINE);
     text(_model.unit(), _shape.cx()+75, _shape.cy()+5);
+    */
   }
 
-  Observable _model;
+  IObservable _model;
 }

@@ -139,6 +139,8 @@ interface IObservable {
   boolean full();
   boolean empty();
   float map(float dmin, float dmax);
+  
+  String name();
 }
 
 /**
@@ -158,10 +160,11 @@ interface IAdjustable {
 
   void toMax();
   void toMin();
+
+  void fix();
 }
 
 interface ISimValue extends IObservable, IAdjustable {
-  void fix();
 }
 
 /**
@@ -171,15 +174,19 @@ interface ISimValue extends IObservable, IAdjustable {
   By default the constraints are Float.MIN_VALUE to Float.MAX_VALUE.
   */
 class SimValue implements ISimValue {
-  SimValue(float value) {
+  SimValue(String name, float value) {
+    this.name = name;
     this.futureValue = this.value = value;
   }
   
-  SimValue(float value, float min, float max) {
+  SimValue(String name, float value, float min, float max) {
+    this.name = name;
     this.min = min;
     this.max = max;
     this.futureValue = this.value = constrain(value,min,max);
   }
+  
+  String name() { return name; }
   
   void fix() {
     value = futureValue;
@@ -210,13 +217,14 @@ class SimValue implements ISimValue {
   float min() { return min; }
   float max() { return max; }
 
+  private String name;
   private float value;  
   private float futureValue;
   private float min = Float.MIN_VALUE;
   private float max = Float.MAX_VALUE;
 }
 
-class InfiniteValue implements ISimValue {
+class InfiniteValue implements IAdjustable {
   void adjust(float delta) { /* nothing to do */ }
   float accept(float delta) { return delta; }
   void toMax() { /* nothing to do */ }
