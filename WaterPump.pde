@@ -2,7 +2,7 @@ class WaterPump extends Actor {
   WaterPump(Adjustable source, Adjustable dest, float flowRate) {
     _source = source;
     _dest = dest;
-    model = new NumericValue(flowRate);
+    model = new NumericValue("flow", flowRate, "l/s");
   }
   
   void nextStep(Simulation theSimulation) {

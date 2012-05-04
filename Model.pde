@@ -5,6 +5,13 @@
   */
 interface Observable {
   float value();
+  String name();
+  String unit();
+}
+
+interface Constrained {
+  float min();
+  float max();
 }
 
 /**
@@ -35,8 +42,10 @@ class InfiniteValue implements Adjustable {
 }
 
 class NumericValue implements Observable, Adjustable {
-  NumericValue(float theValue) {
+  NumericValue(String theName, float theValue, String theUnit) {
     value = theValue;
+    _name = theName;
+    _unit = theUnit;
   }
 
   void invert() { value = -value; }
@@ -46,38 +55,49 @@ class NumericValue implements Observable, Adjustable {
   float value() { return value; }
   
   protected float value;
+  
+  
+  // ==============
+  String name() { return _name; }
+  String unit() { return _unit; }
+  
+  private final String _name;
+  private final String _unit;
 }
 
-class ValueInRange extends NumericValue {
-  ValueInRange(float theValue, float theMin, float theMax) {
-    super(constrain(theValue, theMin, theMax));
-    min = theMin;
-    max = theMax;
+class ValueInRange extends NumericValue implements Constrained {
+  ValueInRange(String name, float theValue, String unit, float theMin, float theMax) {
+    super(name, constrain(theValue, theMin, theMax), unit);
+    _min = theMin;
+    _max = theMax;
   } 
   
   void invert() {
-    value = constrain(-value, min, max);
+    value = constrain(-value, _min, _max);
   }
   
   void adjust(float delta) {
-    value = constrain(value+delta, min, max);
+    value = constrain(value+delta, _min, _max);
   }
   
   float accept(float delta) {
-    return constrain(value+delta, min, max) - value;
+    return constrain(value+delta, _min, _max) - value;
   }
   
-  void toMax() { value = max; }
-  void toMin() { value = min; }
+  void toMax() { value = _max; }
+  void toMin() { value = _min; }
   
-  boolean full() { return value == max; }
-  boolean empty() { return value == min; }
+  boolean full() { return value == _max; }
+  boolean empty() { return value == _min; }
   
   float map(float dmin, float dmax) {
-    return SimThing.map(value, min, max, dmin, dmax);
+    return SimThing.map(value, _min, _max, dmin, dmax);
   }
   
-  final float min;
-  final float max;
+  float min() { return _min; }
+  float max() { return _max; }
+  
+  final float _min;
+  final float _max;
 }
 

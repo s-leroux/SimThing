@@ -1,6 +1,6 @@
 class Simulation {
   Simulation() {
-    _date = new NumericValue(0);
+    _date = new NumericValue("time", 0, "s");
     _actors = new ArrayList<Actor>();
     _events = new PriorityQueue<DatedEvent>();
   }

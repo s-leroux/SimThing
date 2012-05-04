@@ -14,6 +14,12 @@ interface Shape {
   
   abstract float cx();
   abstract float cy();
+  abstract float width();
+  abstract float height();
+  abstract float top();
+  abstract float bottom();
+  abstract float left();
+  abstract float right();
 }
 
 class Rect implements Shape {  
@@ -21,8 +27,10 @@ class Rect implements Shape {
     return (x >= _x && x <=_x+_width) && (y >= _y && y <= _y+_height);
   }
   
-  float x() { return _x; }
-  float y() { return _y; }
+  float left() { return _x; }
+  float right() { return _x+_width; }
+  float top() { return _y; }
+  float bottom() { return _y+_height; }
   float cx() { return _x+_width/2; }
   float cy() { return _y+_height/2; }
   float width() { return _width; }

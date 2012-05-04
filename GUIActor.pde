@@ -2,11 +2,10 @@
  An Actor with a graphical representation.
  May respond to user actions (clics) 
 */
-class GUIActor extends Actor {
+abstract class GUIActor extends Actor {
   GUIActor(Shape shape) {
     _shape = shape;
   }
-  
   /**
     Display a actor of the given status
     */
@@ -38,8 +37,6 @@ class GUIActor extends Actor {
     _pressed = false;
   }
 
-
-  
-  protected Shape   _shape;
   protected boolean _pressed; // does the use have clicked on this GUIActor (button not released)
+  protected Shape    _shape;
 }

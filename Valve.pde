@@ -2,7 +2,7 @@ class Valve extends Actor {
   Valve(Adjustable source, Adjustable dest, float flowRate, float min, float max) {
     _source = source;
     _dest = dest;
-    model = new ValueInRange(flowRate, min, max);
+    model = new ValueInRange("floaw", flowRate, "l/s", min, max);
   }
   
   void nextStep(Simulation theSimulation) {
