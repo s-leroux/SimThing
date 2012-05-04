@@ -74,6 +74,22 @@ void setup() {
     
     flag = dst;
   }
+  
+  // ------------------------------
+  // CSV exporting
+  try {
+    final CSVWriter csv = new CSVWriter("data.csv", simulation.date(), va, vb);
+    csv.writeHeader();
+
+    simulation.in(0, new RepeatEvent(50, new Event() {
+        public void doIt(Simulation theSimulation) {
+          try { csv.writeData(); } catch(IOException x) { }
+        }
+    }));
+  }
+  catch(IOException x) {
+    
+  }
 }
 
 void draw() {
