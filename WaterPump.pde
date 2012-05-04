@@ -1,5 +1,5 @@
 class WaterPump extends Actor {
-  WaterPump(Adjustable source, Adjustable dest, float flowRate) {
+  WaterPump(IAdjustable source, IAdjustable dest, float flowRate) {
     _source = source;
     _dest = dest;
     model = new NumericValue("flow", flowRate, "l/s");
@@ -10,6 +10,6 @@ class WaterPump extends Actor {
   }
 
   NumericValue model;
-  Adjustable _source;
-  Adjustable _dest;
+  IAdjustable _source;
+  IAdjustable _dest;
 }

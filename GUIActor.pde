@@ -9,7 +9,7 @@ abstract class GUIActor extends Actor {
   /**
     Display a actor of the given status
     */
-  void display() {
+  void display(Simulation s) {
     // do nothing by default
   }
   

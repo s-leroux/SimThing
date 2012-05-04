@@ -3,15 +3,15 @@ abstract class Switch extends Indicator {
     super(cx,cy);
   }
   
-  void display() {
+  void display(Simulation sim) {
     stroke((_pressed) ? 255 : 0);
 
-    super.display();
+    super.display(sim);
   }
 }
 
 class OnOff extends Switch {
-  OnOff(float cx, float cy, ValueInRange vir) {
+  OnOff(float cx, float cy, ISimValue vir) {
     super(cx,cy);
     _vir = vir;
   }
@@ -28,5 +28,5 @@ class OnOff extends Switch {
   }
 
   
-  ValueInRange  _vir;
+  ISimValue  _vir;
 }

@@ -8,13 +8,10 @@ abstract class Indicator extends GUIActor {
   
   abstract public boolean active();
   
-  void display() {
+  void display(Simulation s) {
     fill(active() ? 255 : 100, 100,100);
       
     _shape.draw();
   }
-    
-  ValueInRange  _vir;
-
 }
 

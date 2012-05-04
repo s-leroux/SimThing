@@ -1,17 +1,17 @@
 class Gauge extends GUIActor {
-  Gauge(float cx, float cy, float width, float height, ValueInRange model) {
+  Gauge(float cx, float cy, float width, float height, IObservable state) {
     super(RectByCenter(cx, cy, width, height));
-    _model = model;
+    _state = state;
   }
   
-  void display() { 
+  void display(Simulation sim) { 
     fill(255);
     noStroke();
     _shape.draw();
 
     fill(100,100,255);
     rectMode(CORNER);
-    rect(_shape.left(), _shape.bottom(), _shape.width(), -map(_model.value(), _model.min(), _model.max(), 0, _shape.height()));
+    rect(_shape.left(), _shape.bottom(), _shape.width(), -_state.map(0, _shape.height()));
 
     noFill();
     stroke(0);
@@ -26,6 +26,6 @@ class Gauge extends GUIActor {
   float _y;
   float _width;
   float _height;  
-  final ValueInRange  _model;
+  final IObservable  _state;
 }
 

@@ -17,7 +17,7 @@ class UpdateValueEvent extends Event {
 }
 
 class MoveEvent extends Event {
-  MoveEvent(Adjustable theSrc, Adjustable theDst, float theAmount) {
+  MoveEvent(IAdjustable theSrc, IAdjustable theDst, float theAmount) {
     src = theSrc;
     dst = theDst;
     amount = theAmount;
@@ -33,8 +33,8 @@ class MoveEvent extends Event {
     dst.adjust(theAmount);
   }
   
-  final Adjustable src;
-  final Adjustable dst;
+  final IAdjustable src;
+  final IAdjustable dst;
   final float amount;
 }
 

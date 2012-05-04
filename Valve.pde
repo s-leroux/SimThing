@@ -1,15 +1,15 @@
 class Valve extends Actor {
-  Valve(Adjustable source, Adjustable dest, ValueInRange flow) {
+  Valve(IAdjustable source, IAdjustable dest, IObservable flow) {
     _source = source;
     _dest = dest;
-    model = flow;
+    _flow = flow;
   }
   
   void nextStep(Simulation theSimulation) {
-    theSimulation.in(1, new MoveEvent(_source, _dest, model.value()));
+    theSimulation.in(1, new MoveEvent(_source, _dest, _flow.value()));
   }
 
-  ValueInRange model;
-  Adjustable _source;
-  Adjustable _dest;
+  IObservable _flow;
+  IAdjustable _source;
+  IAdjustable _dest;
 }

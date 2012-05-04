@@ -4,7 +4,7 @@ class Display extends GUIActor {
     _model = model;
   }
   
-  void display() {
+  void display(Simulation sim) {
     fill(255,100,100);
     stroke(255,100,100);
     _shape.draw();
