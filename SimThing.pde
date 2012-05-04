@@ -28,31 +28,28 @@ void setup() {
 
   simulation.add(new Display(150,40,va));
   simulation.add(new Display(150,20,simulation.date()));
-  /*
   
   // ------------------------------
   // Logic gate
-  final ValueInRange  in1 = new ValueInRange("in1", 0, "", 0, 1);
-  final ValueInRange  in2 = new ValueInRange("in1", 0, "", 0, 1);
-  final ValueInRange  in3 = new ValueInRange("in1", 0, "", 0, 1);
-  final ValueInRange  in4 = new ValueInRange("in1", 0, "", 0, 1);
-
+  final ISimValue in[] = new ISimValue[4];
+  for(int i = 0; i < in.length; ++i) {
+    in[i] = simulation.makeValueInRange("in_"+i, 0, 0, 1);
+  }
 
   rectMode(CORNERS);
   rect(100,180,160,340);
   
-  simulation.add(new OnOff(100, 200, in1));
-  simulation.add(new OnOff(100, 260, in2));
+  simulation.add(new OnOff(100, 200, in[0]));
+  simulation.add(new OnOff(100, 260, in[1]));
   simulation.add(new Indicator(160, 200) {
-   public boolean active() { return in1.value()*in2.value() != 0; } 
+   public boolean active() { return in[0].value()*in[1].value() != 0; } 
   });
-  simulation.add(new OnOff(160, 260, in3));
-  simulation.add(new OnOff(160, 320, in4));
+  simulation.add(new OnOff(160, 260, in[2]));
+  simulation.add(new OnOff(160, 320, in[3]));
   simulation.add(new Indicator(100, 320) {
-   public boolean active() { return in3.value()*in4.value() != 0; } 
+   public boolean active() { return in[2].value()*in[3].value() != 0; } 
   });
   
-  */
   // ------------------------------
   // Periodic
   ISimValue flag = simulation.makeValueInRange("flag", 0,0,1);
