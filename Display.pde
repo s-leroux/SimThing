@@ -1,5 +1,5 @@
 class Display extends GUIActor {
-  Display(float cx, float cy, ReadableValue model) {
+  Display(float cx, float cy, Observable model) {
     super(RectByCenter(cx,cy,100, 20));
     _model = model;
   }
@@ -17,5 +17,5 @@ class Display extends GUIActor {
     popStyle();
   }
 
-  ReadableValue _model;
+  Observable _model;
 }

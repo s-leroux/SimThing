@@ -1,7 +1,18 @@
 /**
-  Data-centric model for actors status
+  An observable value.
+  
+  You can read the value of an "Observable".
   */
-interface Value {
+interface Observable {
+  float value();
+}
+
+/**
+  An adjustable value.
+  
+  You can adjust the value of an "Adjustable"
+  */
+interface Adjustable {
   /**
     Change the sign of a value
     */
@@ -15,14 +26,15 @@ interface Value {
     Check if a value could be adjusted by the specified amount
     */
   float accept(float delta);
-  
 }
 
-interface ReadableValue {
-  float value();
+class InfiniteValue implements Adjustable {
+  void invert() { /* nothing to do */ }
+  void adjust(float delta) { /* nothing to do */ }
+  float accept(float delta) { return delta; }
 }
 
-class NumericValue implements Value, ReadableValue {
+class NumericValue implements Observable, Adjustable {
   NumericValue(float theValue) {
     value = theValue;
   }
@@ -34,12 +46,6 @@ class NumericValue implements Value, ReadableValue {
   float value() { return value; }
   
   protected float value;
-}
-
-class InfiniteValue implements Value {
-  void invert() { /* nothing to do */ }
-  void adjust(float delta) { /* nothing to do */ }
-  float accept(float delta) { return delta; }
 }
 
 class ValueInRange extends NumericValue {

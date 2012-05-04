@@ -1,5 +1,5 @@
 class Valve extends Actor {
-  Valve(Value source, Value dest, float flowRate, float min, float max) {
+  Valve(Adjustable source, Adjustable dest, float flowRate, float min, float max) {
     _source = source;
     _dest = dest;
     model = new ValueInRange(flowRate, min, max);
@@ -10,6 +10,6 @@ class Valve extends Actor {
   }
 
   ValueInRange model;
-  Value _source;
-  Value _dest;
+  Adjustable _source;
+  Adjustable _dest;
 }

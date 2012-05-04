@@ -3,7 +3,7 @@ abstract class Event {
 }
 
 class UpdateValueEvent extends Event {
-  UpdateValueEvent(Value theValue, float theAdjust) {
+  UpdateValueEvent(Adjustable theValue, float theAdjust) {
     value = theValue;
     adjust = theAdjust;
   }
@@ -12,12 +12,12 @@ class UpdateValueEvent extends Event {
     value.adjust(adjust);
   }
   
-  final Value  value;
+  final Adjustable  value;
   final float  adjust;
 }
 
 class MoveEvent extends Event {
-  MoveEvent(Value theSrc, Value theDst, float theAmount) {
+  MoveEvent(Adjustable theSrc, Adjustable theDst, float theAmount) {
     src = theSrc;
     dst = theDst;
     amount = theAmount;
@@ -33,13 +33,13 @@ class MoveEvent extends Event {
     dst.adjust(theAmount);
   }
   
-  final Value src;
-  final Value dst;
+  final Adjustable src;
+  final Adjustable dst;
   final float amount;
 }
 
 class InvertEvent extends Event {
-  InvertEvent(Value theValue) {
+  InvertEvent(Adjustable theValue) {
     value = theValue;
   }
   
@@ -47,7 +47,7 @@ class InvertEvent extends Event {
     value.invert();
   }
   
-  final Value value;
+  final Adjustable value;
 }
 
 class RepeatEvent extends Event {

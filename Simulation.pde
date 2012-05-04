@@ -66,7 +66,7 @@ class Simulation {
   }
 
   
-  ReadableValue date() { return _date; }
+  Observable date() { return _date; }
  
   class DatedEvent implements Comparable<DatedEvent> {
     DatedEvent(float theDate, Event theEvent) {
