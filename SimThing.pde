@@ -1,7 +1,7 @@
 Simulation simulation = new Simulation();
 
 void setup() {
-  size(300,200);
+  size(300,400);
   
   ValueInRange  tank1  = new ValueInRange("volume cuve A", 50, "l", 0, 200);
   ValueInRange  tank2  = new ValueInRange("volume cuve B", 150, "l", 0, 200);
@@ -24,6 +24,28 @@ void setup() {
   simulation.add(new OnOff(160,120,valve2B_flow));
   simulation.add(new Display(150,20,simulation.date()));
   simulation.add(new Display(150,40,tank1));
+  
+  
+  // ------------------------------
+  // Logic gate
+  final ValueInRange  in1 = new ValueInRange("in1", 0, "", 0, 1);
+  final ValueInRange  in2 = new ValueInRange("in1", 0, "", 0, 1);
+  final ValueInRange  in3 = new ValueInRange("in1", 0, "", 0, 1);
+  final ValueInRange  in4 = new ValueInRange("in1", 0, "", 0, 1);
+
+
+  rectMode(CORNERS);
+  rect(100,180,160,340);
+  simulation.add(new OnOff(100, 200, in1));
+  simulation.add(new OnOff(100, 260, in2));
+  simulation.add(new Indicator(160, 200) {
+   public boolean active() { return in1.value()*in2.value() != 0; } 
+  });
+  simulation.add(new OnOff(160, 260, in3));
+  simulation.add(new OnOff(160, 320, in4));
+  simulation.add(new Indicator(100, 320) {
+   public boolean active() { return in3.value()*in4.value() != 0; } 
+  });
 }
 
 void draw() {

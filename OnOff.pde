@@ -1,13 +1,13 @@
-class OnOff extends GUIActor {
+class OnOff extends Indicator {
   OnOff(float cx, float cy, ValueInRange vir) {
-    super(RectByCenter(cx,cy,30,30));
+    super(cx,cy);
     _vir = vir;
   }
   
   void display() {
     stroke((_pressed) ? 255 : 0);
-    fill(_vir.map(100, 255), 100,100);
-    _shape.draw();
+
+    super.display();
   }
   
   void userAction() {
@@ -15,6 +15,10 @@ class OnOff extends GUIActor {
       _vir.toMax();
     else
       _vir.toMin();
+  }
+  
+  boolean active() {
+    return _vir.full();
   }
 
   

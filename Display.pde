@@ -1,6 +1,6 @@
 class Display extends GUIActor {
   Display(float cx, float cy, Observable model) {
-    super(RectByCenter(cx,cy,100, 20));
+    super(RectByCenter(cx,cy,140, 20));
     _model = model;
   }
   
@@ -10,9 +10,11 @@ class Display extends GUIActor {
     stroke(255,100,100);
     _shape.draw();
     
-    textAlign(RIGHT,CENTER);
+    textAlign(RIGHT,BASELINE);
     fill(0);
-    text(_model.value(), _shape.cx()+40, _shape.cy());
+    text(_model.value(), _shape.cx()+40, _shape.cy()+5);
+    textAlign(LEFT,BASELINE);
+    text(_model.unit(), _shape.cx()+45, _shape.cy()+5);
     
     popStyle();
   }
